@@ -91,10 +91,12 @@ window.PORTFOLIO_DATA = {
     { name: 'Product Management: agilize o desenvolvimento de produtos', issuer: 'Alura', url: null }
   ],
 
-  /* `url` é o destino do card inteiro — hoje aponta para o repositório no GitHub.
-     Ao publicar o site de um projeto, troque `url` pelo endereço publicado e mova
-     o link do GitHub para `repo`: o card passa a mostrar os dois links, e o rótulo
-     "Ver no GitHub" volta sozinho a ser "Ver projeto".
+  /* `url` é o destino do card inteiro — aponta para o site publicado do projeto.
+     Esses endereços só respondem depois de ativar o GitHub Pages em cada
+     repositório (Settings > Pages > branch main, pasta / (root)). Como o site de
+     cada projeto está dentro de uma subpasta do repositório, a subpasta faz parte
+     da URL. Para mostrar também o código, basta preencher `repo` com o link do
+     GitHub que o card ganha um segundo link.
 
      TROCAR A CAPA PELO PRINT REAL: salve o arquivo em assets/capas/ e mude só
      o `image`. Capture em 1440px de largura e recorte 16:9 do topo da página. */
@@ -107,9 +109,12 @@ window.PORTFOLIO_DATA = {
       tags: ['Identidade visual', 'UI/UX', 'Design System', 'HTML5', 'CSS3', 'JavaScript'],
       image: 'assets/capas/raiz-cafe.svg',
       imageAlt: '',
-      url: 'https://github.com/pedroka3/Raiz-Caf-identidade-visual-e-site-institucional',
+      url: 'https://pedroka3.github.io/Raiz-Caf-identidade-visual-e-site-institucional/raiz-cafe/',
       repo: null,
-      extra: { label: 'Manual de marca', url: null }  /* [EDITAR] .../marca.html */
+      extra: {
+        label: 'Manual de marca',
+        url: 'https://pedroka3.github.io/Raiz-Caf-identidade-visual-e-site-institucional/raiz-cafe/marca.html'
+      }
     },
     {
       year: '2026',
@@ -119,9 +124,9 @@ window.PORTFOLIO_DATA = {
       tags: ['Landing Page', 'CRO', 'SEO', 'UI/UX', 'HTML5', 'CSS3', 'JavaScript'],
       image: 'assets/capas/vertice-ti.svg',
       imageAlt: '',
-      url: 'https://github.com/pedroka3/V-rtice-TI-landing-page-de-capta-o',
+      url: 'https://pedroka3.github.io/V-rtice-TI-landing-page-de-capta-o/vertice-ti/',
       repo: null,
-      extra: { label: 'Ver variante B', url: null }  /* [EDITAR] .../?v=b */
+      extra: { label: 'Ver variante B', url: null }  /* [EDITAR] .../vertice-ti/?v=b */
     },
     {
       year: '2026',
@@ -131,7 +136,7 @@ window.PORTFOLIO_DATA = {
       tags: ['JavaScript', 'Acessibilidade', 'Motion', 'SEO', 'HTML5', 'CSS3'],
       image: 'assets/capas/encontro-tech.svg',
       imageAlt: '',
-      url: 'https://github.com/pedroka3/Encontro-Tech-Campinas-site-de-evento',
+      url: 'https://pedroka3.github.io/Encontro-Tech-Campinas-site-de-evento/encontro-tech-campinas/',
       repo: null
     }
   ],
