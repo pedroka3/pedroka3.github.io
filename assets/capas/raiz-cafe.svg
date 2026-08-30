@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <!-- Capa provisória do projeto Raiz Café.
+       SVG usado via <img> não carrega fonte externa, então aqui vai a
+       pilha do sistema. Trocar por print real quando disponível. -->
+  <rect width="1200" height="675" fill="#FBF7F0"/>
+
+  <!-- forma de apoio -->
+  <circle cx="1010" cy="150" r="230" fill="#EFE5D5"/>
+  <circle cx="1090" cy="600" r="150" fill="#D99A4E" opacity="0.28"/>
+
+  <!-- símbolo: grão cujo vinco vira raiz -->
+  <g transform="translate(96,96) scale(3.1)" >
+    <path d="M32 5C20.4 5 11 14 11 25c0 9.4 9.4 17 21 17s21-7.6 21-17C53 14 43.6 5 32 5Z" fill="#B4471F"/>
+    <path d="M32 8c-6 8-6 24 0 32" stroke="#FBF7F0" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    <g stroke="#B4471F" stroke-width="2.6" fill="none" stroke-linecap="round">
+      <path d="M32 42v17"/>
+      <path d="M32 47c-6 2-9.5 6.5-10.5 11"/>
+      <path d="M32 47c6 2 9.5 6.5 10.5 11"/>
+    </g>
+  </g>
+
+  <text x="320" y="212" font-family="Georgia, 'Times New Roman', serif" font-size="132"
+        font-weight="700" fill="#241A14" letter-spacing="-4">raiz</text>
+  <text x="326" y="252" font-family="system-ui, 'Segoe UI', sans-serif" font-size="21"
+        font-weight="600" fill="#6B5A4E" letter-spacing="11">CAFÉ DE ORIGEM</text>
+
+  <rect x="96" y="360" width="96" height="4" rx="2" fill="#B4471F"/>
+
+  <text x="96" y="438" font-family="Georgia, 'Times New Roman', serif" font-size="50"
+        font-weight="700" fill="#241A14">Identidade visual e site institucional</text>
+
+  <text x="96" y="492" font-family="system-ui, 'Segoe UI', sans-serif" font-size="27"
+        fill="#6B5A4E">Manual de marca, tom de voz e quatro páginas construídas em cima dele</text>
+
+  <!-- paleta -->
+  <g>
+    <rect x="96"  y="548" width="112" height="52" rx="5" fill="#FBF7F0" stroke="#DFCFB4"/>
+    <rect x="216" y="548" width="112" height="52" rx="5" fill="#EFE5D5"/>
+    <rect x="336" y="548" width="112" height="52" rx="5" fill="#241A14"/>
+    <rect x="456" y="548" width="112" height="52" rx="5" fill="#B4471F"/>
+    <rect x="576" y="548" width="112" height="52" rx="5" fill="#3F5233"/>
+    <rect x="696" y="548" width="112" height="52" rx="5" fill="#D99A4E"/>
+  </g>
+
+  <text x="96" y="632" font-family="system-ui, 'Segoe UI', sans-serif" font-size="18"
+        fill="#8B7A6C" letter-spacing="2">PROJETO FICTÍCIO · ESTUDO DE CASO</text>
+</svg>
