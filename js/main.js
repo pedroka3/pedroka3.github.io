@@ -235,11 +235,84 @@
     });
   }
 
+  var toastTimer = null;
+
+  function mostrarToast(mensagem) {
+    var toast = document.getElementById('toast');
+    if (!toast) return;
+
+    toast.textContent = mensagem;
+    toast.classList.add('is-visible');
+
+    window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(function () {
+      toast.classList.remove('is-visible');
+    }, 2200);
+  }
+
+  /* Reserva que não depende de permissão: seleciona o texto num campo fora da
+     tela e usa o comando de cópia antigo. Precisa rodar durante o clique. */
+  function copiarPorCampoTemporario(texto) {
+    var campo = document.createElement('textarea');
+    campo.value = texto;
+    campo.setAttribute('readonly', '');
+    campo.style.position = 'fixed';
+    campo.style.top = '-1000px';
+    campo.style.opacity = '0';
+    document.body.appendChild(campo);
+    campo.select();
+
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+
+    document.body.removeChild(campo);
+    return ok;
+  }
+
+  /* A Clipboard API é a forma correta, mas pode ficar pendente para sempre
+     quando o navegador segura a decisão de permissão — e aí o visitante
+     clicaria sem receber resposta nenhuma. Por isso há um prazo: passado ele,
+     usamos a reserva, que ainda cabe na janela de interação do clique. */
+  function copiarTexto(texto) {
+    return new Promise(function (resolve, reject) {
+      var respondido = false;
+
+      function concluir(sucesso) {
+        if (respondido) return;
+        respondido = true;
+        if (sucesso) resolve(); else reject();
+      }
+
+      function usarReserva() {
+        concluir(copiarPorCampoTemporario(texto));
+      }
+
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(texto).then(function () {
+          concluir(true);
+        }, usarReserva);
+
+        window.setTimeout(function () {
+          if (!respondido) usarReserva();
+        }, 1200);
+      } else {
+        usarReserva();
+      }
+    });
+  }
+
   function renderContact() {
     var mail = document.getElementById('contactMail');
     if (mail) {
-      mail.href = 'mailto:' + DATA.contact.email;
       bindText('email', DATA.contact.email);
+
+      mail.addEventListener('click', function () {
+        copiarTexto(DATA.contact.email).then(function () {
+          mostrarToast('E-mail copiado para a área de transferência');
+        }, function () {
+          mostrarToast('Não foi possível copiar. O e-mail é ' + DATA.contact.email);
+        });
+      });
     }
 
     var list = document.getElementById('contactLinks');
