@@ -7,6 +7,17 @@
     return;
   }
 
+  var I18N = window.I18N;
+  if (!I18N) {
+    console.error('[portfólio] js/i18n.js não foi carregado.');
+    return;
+  }
+
+  /* t() = texto de interface pela chave. c() = campo de conteúdo do data.js,
+     que pode ser texto simples (não traduz) ou objeto por idioma. */
+  function t(chave) { return I18N.t(chave); }
+  function c(valor) { return I18N.campo(valor); }
+
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   function el(tag, props, children) {
@@ -46,12 +57,14 @@
 
     bindText('name', p.name);
     bindText('shortName', p.shortName || p.name);
-    bindText('availability', p.availability);
-    bindText('bio', p.bio);
+    bindText('availability', c(p.availability));
+    bindText('bio', c(p.bio));
 
     var chips = document.getElementById('heroChips');
-    if (chips && p.highlights && p.highlights.length) {
-      p.highlights.forEach(function (item) {
+    var destaques = c(p.highlights) || [];
+    if (chips && destaques.length) {
+      chips.innerHTML = '';
+      destaques.forEach(function (item) {
         chips.appendChild(el('li', {}, [el('span', { class: 'chip', text: item })]));
       });
     } else if (chips) {
@@ -61,10 +74,11 @@
 
     var stats = document.getElementById('heroStats');
     if (stats && p.stats && p.stats.length) {
+      stats.innerHTML = '';
       p.stats.forEach(function (stat) {
         stats.appendChild(el('div', {}, [
           el('dt', { text: stat.value }),
-          el('dd', { text: stat.label })
+          el('dd', { text: c(stat.label) })
         ]));
       });
     } else if (stats) {
@@ -75,16 +89,19 @@
   function renderExperience() {
     var list = document.getElementById('timeline');
     if (!list) return;
+    list.innerHTML = '';
 
     DATA.experience.forEach(function (job, index) {
+      var bullets = c(job.bullets) || [];
+      var tags = c(job.tags) || [];
       var card = el('div', { class: 'timeline__card' }, [
-        el('span', { class: 'timeline__period', text: job.period }),
-        el('h3', { class: 'timeline__role', text: job.role }),
-        el('span', { class: 'timeline__company', text: job.company }),
-        el('ul', { class: 'timeline__bullets' }, (job.bullets || []).map(function (bullet) {
+        el('span', { class: 'timeline__period', text: c(job.period) }),
+        el('h3', { class: 'timeline__role', text: c(job.role) }),
+        el('span', { class: 'timeline__company', text: c(job.company) }),
+        el('ul', { class: 'timeline__bullets' }, bullets.map(function (bullet) {
           return el('li', { text: bullet });
         })),
-        (job.tags && job.tags.length) ? chipList(job.tags, 'timeline__tags') : null
+        tags.length ? chipList(tags, 'timeline__tags') : null
       ]);
 
       list.appendChild(el('li', {
@@ -99,12 +116,13 @@
     var list = document.getElementById('education');
 
     if (list) {
+      list.innerHTML = '';
       (DATA.education || []).forEach(function (item, index) {
         var card = el('div', { class: 'timeline__card' }, [
-          el('span', { class: 'timeline__period', text: item.period }),
-          el('h3', { class: 'timeline__role', text: item.course }),
-          el('span', { class: 'timeline__company', text: item.school }),
-          item.status ? chipList([item.status], 'timeline__tags') : null
+          el('span', { class: 'timeline__period', text: c(item.period) }),
+          el('h3', { class: 'timeline__role', text: c(item.course) }),
+          el('span', { class: 'timeline__company', text: c(item.school) }),
+          item.status ? chipList([c(item.status)], 'timeline__tags') : null
         ]);
 
         list.appendChild(el('li', {
@@ -117,6 +135,7 @@
 
     var certs = document.getElementById('certifications');
     if (!certs) return;
+    certs.innerHTML = '';
 
     (DATA.certifications || []).forEach(function (cert, index) {
 
@@ -143,12 +162,14 @@
   function renderProjects() {
     var grid = document.getElementById('projects');
     if (!grid) return;
+    grid.innerHTML = '';
 
     DATA.projects.forEach(function (project, index) {
+      var titulo = c(project.title);
 
       var titleInner = project.url
-        ? el('a', { href: project.url, target: '_blank', rel: 'noopener noreferrer', text: project.title })
-        : document.createTextNode(project.title);
+        ? el('a', { href: project.url, target: '_blank', rel: 'noopener noreferrer', text: titulo })
+        : document.createTextNode(titulo);
 
       var title = el('h3', { class: 'project__title' });
       title.appendChild(titleInner);
@@ -161,7 +182,7 @@
         links.appendChild(el('a', {
           class: 'link-arrow', href: project.url, target: '_blank', rel: 'noopener noreferrer'
         }, [
-          el('span', { text: paraGithub ? 'Ver no GitHub' : 'Ver projeto' }),
+          el('span', { text: paraGithub ? t('projects.github') : t('projects.view') }),
           el('span', { 'aria-hidden': 'true', text: paraGithub ? '↗' : '→' })
         ]));
       }
@@ -169,7 +190,7 @@
         links.appendChild(el('a', {
           class: 'link-arrow', href: project.repo, target: '_blank', rel: 'noopener noreferrer'
         }, [
-          el('span', { text: 'Código' }),
+          el('span', { text: t('projects.code') }),
           el('span', { 'aria-hidden': 'true', text: '↗' })
         ]));
       }
@@ -178,7 +199,7 @@
         links.appendChild(el('a', {
           class: 'link-arrow', href: project.extra.url, target: '_blank', rel: 'noopener noreferrer'
         }, [
-          el('span', { text: project.extra.label }),
+          el('span', { text: c(project.extra.label) }),
           el('span', { 'aria-hidden': 'true', text: '↗' })
         ]));
       }
@@ -212,8 +233,8 @@
           el('span', { class: 'project__year', text: project.year || '' })
         ]),
         title,
-        el('p', { class: 'project__desc', text: project.description }),
-        (project.tags && project.tags.length) ? chipList(project.tags, 'project__tags') : null,
+        el('p', { class: 'project__desc', text: c(project.description) }),
+        (c(project.tags) || []).length ? chipList(c(project.tags), 'project__tags') : null,
         links.childNodes.length ? links : null
       ]));
     });
@@ -222,6 +243,7 @@
   function renderSkills() {
     var grid = document.getElementById('skills-grid');
     if (!grid) return;
+    grid.innerHTML = '';
 
     DATA.skills.forEach(function (group, index) {
       grid.appendChild(el('div', {
@@ -229,8 +251,8 @@
         'data-reveal': '',
         'data-reveal-delay': staggerDelay(index)
       }, [
-        el('h3', { class: 'skill-group__title', text: group.title }),
-        chipList(group.items, 'skill-group__list')
+        el('h3', { class: 'skill-group__title', text: c(group.title) }),
+        chipList(c(group.items) || [], 'skill-group__list')
       ]));
     });
   }
@@ -306,17 +328,21 @@
     if (mail) {
       bindText('email', DATA.contact.email);
 
-      mail.addEventListener('click', function () {
-        copiarTexto(DATA.contact.email).then(function () {
-          mostrarToast('E-mail copiado para a área de transferência');
-        }, function () {
-          mostrarToast('Não foi possível copiar. O e-mail é ' + DATA.contact.email);
+      if (!mail.dataset.ligado) {
+        mail.dataset.ligado = '1';
+        mail.addEventListener('click', function () {
+          copiarTexto(DATA.contact.email).then(function () {
+            mostrarToast(t('toast.copied'));
+          }, function () {
+            mostrarToast(t('toast.failed') + ' ' + DATA.contact.email);
+          });
         });
-      });
+      }
     }
 
     var list = document.getElementById('contactLinks');
     if (list) {
+      list.innerHTML = '';
       DATA.contact.links.forEach(function (link) {
 
         var isExternal = /^https?:/i.test(link.url) || /\.pdf$/i.test(link.url);
@@ -325,7 +351,7 @@
             href: link.url,
             target: isExternal ? '_blank' : null,
             rel: isExternal ? 'noopener noreferrer' : null,
-            text: link.label
+            text: c(link.label)
           })
         ]));
       });
@@ -335,10 +361,19 @@
     if (year) year.textContent = String(new Date().getFullYear());
   }
 
+  var typingTimer = null;
+  var typingSessao = 0;
+
   function initTyping() {
     var target = document.querySelector('[data-bind="role"]');
-    var roles = DATA.profile.roles || [];
+    var roles = c(DATA.profile.roles) || [];
     if (!target || !roles.length) return;
+
+    /* Ao trocar de idioma esta função roda de novo. A sessão invalida o ciclo
+       anterior, senão dois laços ficariam escrevendo no mesmo elemento. */
+    window.clearTimeout(typingTimer);
+    typingSessao++;
+    var sessao = typingSessao;
 
     target.textContent = '';
     var textNode = el('span', { text: '' });
@@ -357,6 +392,8 @@
     var deleting = false;
 
     function tick() {
+      if (sessao !== typingSessao) return;
+
       var full = roles[roleIndex];
       charIndex += deleting ? -1 : 1;
       textNode.textContent = full.slice(0, charIndex);
@@ -372,10 +409,10 @@
         delay = 320;
       }
 
-      window.setTimeout(tick, delay);
+      typingTimer = window.setTimeout(tick, delay);
     }
 
-    window.setTimeout(tick, 600);
+    typingTimer = window.setTimeout(tick, 600);
   }
 
   function initReveal() {
@@ -542,6 +579,134 @@
     });
   }
 
+  /* Aplica as chaves data-i18n (texto) e data-i18n-attr (atributos, no formato
+     "atributo:chave", separados por vírgula). */
+  function aplicarTextosFixos() {
+    document.querySelectorAll('[data-i18n]').forEach(function (node) {
+      node.textContent = t(node.getAttribute('data-i18n'));
+    });
+
+    document.querySelectorAll('[data-i18n-attr]').forEach(function (node) {
+      node.getAttribute('data-i18n-attr').split(',').forEach(function (par) {
+        var partes = par.split(':');
+        if (partes.length === 2) {
+          node.setAttribute(partes[0].trim(), t(partes[1].trim()));
+        }
+      });
+    });
+
+    document.title = t('doc.title');
+    var desc = document.querySelector('meta[name="description"]');
+    if (desc) desc.setAttribute('content', t('doc.description'));
+    document.documentElement.setAttribute('lang', I18N.atual);
+  }
+
+  function montarSeletorIdioma() {
+    var btn = document.getElementById('langBtn');
+    var menu = document.getElementById('langMenu');
+    var code = document.getElementById('langCode');
+    if (!btn || !menu || !code) return;
+
+    function sincronizar() {
+      I18N.LANGS.forEach(function (lang) {
+        var op = menu.querySelector('[data-lang="' + lang.id + '"]');
+        if (op) op.setAttribute('aria-checked', String(lang.id === I18N.atual));
+        if (lang.id === I18N.atual) code.textContent = lang.code;
+      });
+    }
+
+    menu.innerHTML = '';
+    I18N.LANGS.forEach(function (lang) {
+      var op = el('button', {
+        class: 'lang__option', type: 'button', role: 'menuitemradio',
+        'aria-checked': 'false', 'data-lang': lang.id, lang: lang.id, text: lang.label
+      });
+      menu.appendChild(el('li', { role: 'none' }, [op]));
+    });
+
+    function abrir() {
+      menu.classList.add('is-open');
+      menu.removeAttribute('inert');
+      btn.setAttribute('aria-expanded', 'true');
+      document.addEventListener('click', foraDoMenu, true);
+      document.addEventListener('keydown', teclaNoMenu);
+    }
+
+    function fechar(devolverFoco) {
+      if (menu.contains(document.activeElement) || devolverFoco) btn.focus();
+      menu.classList.remove('is-open');
+      menu.setAttribute('inert', '');
+      btn.setAttribute('aria-expanded', 'false');
+      document.removeEventListener('click', foraDoMenu, true);
+      document.removeEventListener('keydown', teclaNoMenu);
+    }
+
+    function foraDoMenu(event) {
+      if (menu.contains(event.target) || btn.contains(event.target)) return;
+      fechar(false);
+    }
+
+    function teclaNoMenu(event) {
+      if (event.key === 'Escape') { fechar(true); return; }
+      if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+
+      var opcoes = Array.prototype.slice.call(menu.querySelectorAll('.lang__option'));
+      var atual = opcoes.indexOf(document.activeElement);
+      if (atual === -1) return;
+      event.preventDefault();
+      var passo = event.key === 'ArrowDown' ? 1 : -1;
+      opcoes[(atual + passo + opcoes.length) % opcoes.length].focus();
+    }
+
+    btn.addEventListener('click', function () {
+      if (menu.classList.contains('is-open')) fechar(true);
+      else {
+        abrir();
+        var marcada = menu.querySelector('[aria-checked="true"]');
+        if (marcada) marcada.focus();
+      }
+    });
+
+    menu.addEventListener('click', function (event) {
+      var op = event.target.closest('.lang__option');
+      if (!op) return;
+      trocarIdioma(op.dataset.lang);
+      sincronizar();
+      fechar(true);
+    });
+
+    montarSeletorIdioma.sincronizar = sincronizar;
+    sincronizar();
+  }
+
+  function trocarIdioma(lang) {
+    if (!I18N.existe(lang) || lang === I18N.atual) return;
+    I18N.definir(lang);
+
+    aplicarTextosFixos();
+    renderProfile();
+    renderExperience();
+    renderEducation();
+    renderProjects();
+    renderSkills();
+    renderContact();
+    initTyping();
+    initCardGlow();
+
+    if (window.atualizarTextosTema) window.atualizarTextosTema();
+
+    /* Os blocos recriados nascem invisíveis por causa do data-reveal. Numa troca
+       de idioma a página já está à vista, então revelamos na hora — esperar o
+       observador faria as seções sumirem. */
+    document.querySelectorAll('[data-reveal]').forEach(function (node) {
+      node.classList.add('is-visible');
+    });
+
+    window.dispatchEvent(new Event('resize'));
+  }
+
+  aplicarTextosFixos();
+
   renderProfile();
   renderExperience();
   renderEducation();
@@ -549,6 +714,7 @@
   renderSkills();
   renderContact();
 
+  montarSeletorIdioma();
   initTyping();
   initReveal();
   initMobileNav();

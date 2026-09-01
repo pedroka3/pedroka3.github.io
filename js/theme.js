@@ -1,14 +1,20 @@
 (function () {
   'use strict';
 
+  /* O nome de cada cor vem do dicionário de idiomas. */
+  var I18N = window.I18N;
+  function t(chave) { return I18N ? I18N.t(chave) : chave; }
+
   var PALETTES = [
-    { id: 'violet', label: 'Violeta', color: '#7c5cff' },
-    { id: 'mint',   label: 'Menta',   color: '#10b981' },
-    { id: 'coral',  label: 'Coral',   color: '#f2545b' },
-    { id: 'sky',    label: 'Azul',    color: '#0ea5e9' },
-    { id: 'amber',  label: 'Âmbar',   color: '#f59e0b' },
-    { id: 'lime',   label: 'Limão',   color: '#84cc16' }
+    { id: 'violet', color: '#7c5cff' },
+    { id: 'mint',   color: '#10b981' },
+    { id: 'coral',  color: '#f2545b' },
+    { id: 'sky',    color: '#0ea5e9' },
+    { id: 'amber',  color: '#f59e0b' },
+    { id: 'lime',   color: '#84cc16' }
   ];
+
+  function nomeDaCor(id) { return t('color.' + id); }
 
   var STORAGE_THEME = 'portfolio-theme';
   var STORAGE_ACCENT = 'portfolio-accent';
@@ -70,7 +76,7 @@
   function syncModeUI() {
     var isDark = currentTheme === 'dark';
     if (modeSwitch) modeSwitch.setAttribute('aria-checked', String(isDark));
-    if (modeLabel) modeLabel.textContent = isDark ? 'Escuro' : 'Claro';
+    if (modeLabel) modeLabel.textContent = isDark ? t('theme.dark') : t('theme.light');
   }
 
   function syncSwatchUI() {
@@ -93,8 +99,8 @@
       btn.className = 'swatch';
       btn.setAttribute('role', 'radio');
       btn.setAttribute('aria-checked', 'false');
-      btn.setAttribute('aria-label', palette.label);
-      btn.title = palette.label;
+      btn.setAttribute('aria-label', nomeDaCor(palette.id));
+      btn.title = nomeDaCor(palette.id);
       btn.dataset.accent = palette.id;
       btn.style.setProperty('--swatch', palette.color);
       frag.appendChild(btn);
@@ -190,4 +196,18 @@
   } else if (typeof prefersLight.addListener === 'function') {
     prefersLight.addListener(onSystemChange);
   }
+
+  /* Chamado por main.js quando o idioma muda: os nomes das cores e o rótulo do
+     modo são gerados aqui, então precisam ser reescritos. */
+  window.atualizarTextosTema = function () {
+    if (swatchList) {
+      var botoes = swatchList.querySelectorAll('.swatch');
+      for (var i = 0; i < botoes.length; i++) {
+        var nome = nomeDaCor(botoes[i].dataset.accent);
+        botoes[i].setAttribute('aria-label', nome);
+        botoes[i].title = nome;
+      }
+    }
+    syncModeUI();
+  };
 })();

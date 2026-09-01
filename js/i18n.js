@@ -1,0 +1,336 @@
+/* Idiomas do site e textos de interface.
+   O conteúdo (bio, experiências, projetos) fica em js/data.js, onde cada campo
+   traduzível é um objeto { pt, en, es, de, fr }. Aqui ficam só os textos fixos.
+   Este arquivo precisa ser carregado antes de theme.js e main.js. */
+
+window.I18N = (function () {
+  'use strict';
+
+  var STORAGE = 'portfolio-lang';
+  var PADRAO = 'pt';
+
+  var LANGS = [
+    { id: 'pt', code: 'PT', label: 'Português' },
+    { id: 'en', code: 'EN', label: 'English' },
+    { id: 'es', code: 'ES', label: 'Español' },
+    { id: 'de', code: 'DE', label: 'Deutsch' },
+    { id: 'fr', code: 'FR', label: 'Français' }
+  ];
+
+  var UI = {
+    pt: {
+      'doc.title': 'Pedro Scomparim Pelizaro — Portfólio',
+      'doc.description': 'Portfólio de Pedro Scomparim Pelizaro — analista de suporte técnico e estudante de Sistemas de Informação em Campinas, SP. Experiência, formação e formas de contato.',
+      'skip': 'Pular para o conteúdo',
+      'nav.aria': 'Navegação principal',
+      'nav.about': 'Sobre mim',
+      'nav.history': 'Histórico',
+      'nav.education': 'Formação',
+      'nav.projects': 'Projetos',
+      'nav.skills': 'Skills',
+      'nav.contact': 'Contato',
+      'nav.toggle': 'Abrir menu de navegação',
+      'lang.aria': 'Escolher idioma',
+      'lang.current': 'Idioma atual',
+      'hero.hi': 'Olá, eu sou',
+      'hero.cta1': 'Ver projetos',
+      'hero.cta2': 'Falar comigo',
+      'hero.photoAlt': 'Foto de Pedro Scomparim Pelizaro',
+      'tag.history': '01 — Trajetória',
+      'tag.education': '02 — Formação',
+      'tag.projects': '03 — Portfólio',
+      'tag.skills': '04 — Skills',
+      'tag.contact': '05 — Contato',
+      'history.title': 'Histórico profissional',
+      'history.lead': 'Onde passei, o que construí e o que aprendi em cada etapa.',
+      'education.title': 'Formação & certificações',
+      'education.lead': 'Minha base acadêmica e os cursos que complementam a formação técnica.',
+      'education.certs': 'Certificações',
+      'projects.title': 'Projetos',
+      'projects.lead': 'Três projetos completos, do briefing ao site no ar. Cada um tem o estudo de caso no repositório: o problema, as decisões de design e o que eu faria diferente.',
+      'projects.view': 'Ver projeto',
+      'projects.github': 'Ver no GitHub',
+      'projects.code': 'Código',
+      'skills.title': 'Skills & ferramentas',
+      'skills.lead': 'Tecnologias, ferramentas e competências que uso no dia a dia.',
+      'contact.title': 'Vamos construir algo juntos?',
+      'contact.lead': 'Estou aberto a novas oportunidades na área de tecnologia e a boas conversas sobre desenvolvimento, suporte e infraestrutura. Fique à vontade para chamar.',
+      'footer.rights': 'Todos os direitos reservados.',
+      'toast.copied': 'E-mail copiado para a área de transferência',
+      'toast.failed': 'Não foi possível copiar. O e-mail é',
+      'theme.aria': 'Personalizar aparência',
+      'theme.open': 'Personalizar cores do site',
+      'theme.color': 'Cor de destaque',
+      'theme.mode': 'Modo',
+      'theme.dark': 'Escuro',
+      'theme.light': 'Claro',
+      'color.violet': 'Violeta',
+      'color.mint': 'Menta',
+      'color.coral': 'Coral',
+      'color.sky': 'Azul',
+      'color.amber': 'Âmbar',
+      'color.lime': 'Limão',
+      'noscript': 'Este portfólio usa JavaScript para carregar o conteúdo e as animações. Ative o JavaScript para ver a página completa.'
+    },
+
+    en: {
+      'doc.title': 'Pedro Scomparim Pelizaro — Portfolio',
+      'doc.description': 'Portfolio of Pedro Scomparim Pelizaro — technical support analyst and Information Systems student in Campinas, Brazil. Experience, education and contact details.',
+      'skip': 'Skip to content',
+      'nav.aria': 'Main navigation',
+      'nav.about': 'About me',
+      'nav.history': 'Experience',
+      'nav.education': 'Education',
+      'nav.projects': 'Projects',
+      'nav.skills': 'Skills',
+      'nav.contact': 'Contact',
+      'nav.toggle': 'Open navigation menu',
+      'lang.aria': 'Choose language',
+      'lang.current': 'Current language',
+      'hero.hi': "Hi, I'm",
+      'hero.cta1': 'View projects',
+      'hero.cta2': 'Get in touch',
+      'hero.photoAlt': 'Photo of Pedro Scomparim Pelizaro',
+      'tag.history': '01 — Career',
+      'tag.education': '02 — Education',
+      'tag.projects': '03 — Portfolio',
+      'tag.skills': '04 — Skills',
+      'tag.contact': '05 — Contact',
+      'history.title': 'Professional experience',
+      'history.lead': 'Where I have worked, what I built and what I learned along the way.',
+      'education.title': 'Education & certifications',
+      'education.lead': 'My academic background and the courses that round out my technical training.',
+      'education.certs': 'Certifications',
+      'projects.title': 'Projects',
+      'projects.lead': 'Three complete projects, from brief to live site. Each one has its case study in the repository: the problem, the design decisions and what I would do differently.',
+      'projects.view': 'View project',
+      'projects.github': 'View on GitHub',
+      'projects.code': 'Source code',
+      'skills.title': 'Skills & tools',
+      'skills.lead': 'Technologies, tools and skills I use day to day.',
+      'contact.title': 'Let’s build something together',
+      'contact.lead': 'I am open to new opportunities in tech and to good conversations about development, support and infrastructure. Feel free to reach out.',
+      'footer.rights': 'All rights reserved.',
+      'toast.copied': 'Email copied to the clipboard',
+      'toast.failed': 'Could not copy. The email address is',
+      'theme.aria': 'Customize appearance',
+      'theme.open': 'Customize site colors',
+      'theme.color': 'Accent color',
+      'theme.mode': 'Mode',
+      'theme.dark': 'Dark',
+      'theme.light': 'Light',
+      'color.violet': 'Violet',
+      'color.mint': 'Mint',
+      'color.coral': 'Coral',
+      'color.sky': 'Blue',
+      'color.amber': 'Amber',
+      'color.lime': 'Lime',
+      'noscript': 'This portfolio uses JavaScript to load its content and animations. Enable JavaScript to see the full page.'
+    },
+
+    es: {
+      'doc.title': 'Pedro Scomparim Pelizaro — Portafolio',
+      'doc.description': 'Portafolio de Pedro Scomparim Pelizaro — analista de soporte técnico y estudiante de Sistemas de Información en Campinas, Brasil. Experiencia, formación y contacto.',
+      'skip': 'Saltar al contenido',
+      'nav.aria': 'Navegación principal',
+      'nav.about': 'Sobre mí',
+      'nav.history': 'Experiencia',
+      'nav.education': 'Formación',
+      'nav.projects': 'Proyectos',
+      'nav.skills': 'Habilidades',
+      'nav.contact': 'Contacto',
+      'nav.toggle': 'Abrir menú de navegación',
+      'lang.aria': 'Elegir idioma',
+      'lang.current': 'Idioma actual',
+      'hero.hi': 'Hola, soy',
+      'hero.cta1': 'Ver proyectos',
+      'hero.cta2': 'Hablemos',
+      'hero.photoAlt': 'Foto de Pedro Scomparim Pelizaro',
+      'tag.history': '01 — Trayectoria',
+      'tag.education': '02 — Formación',
+      'tag.projects': '03 — Portafolio',
+      'tag.skills': '04 — Habilidades',
+      'tag.contact': '05 — Contacto',
+      'history.title': 'Experiencia profesional',
+      'history.lead': 'Dónde he trabajado, qué construí y qué aprendí en cada etapa.',
+      'education.title': 'Formación y certificaciones',
+      'education.lead': 'Mi base académica y los cursos que complementan mi formación técnica.',
+      'education.certs': 'Certificaciones',
+      'projects.title': 'Proyectos',
+      'projects.lead': 'Tres proyectos completos, del briefing al sitio publicado. Cada uno tiene su estudio de caso en el repositorio: el problema, las decisiones de diseño y qué haría distinto.',
+      'projects.view': 'Ver proyecto',
+      'projects.github': 'Ver en GitHub',
+      'projects.code': 'Código',
+      'skills.title': 'Habilidades y herramientas',
+      'skills.lead': 'Tecnologías, herramientas y competencias que uso a diario.',
+      'contact.title': '¿Construimos algo juntos?',
+      'contact.lead': 'Estoy abierto a nuevas oportunidades en tecnología y a buenas conversaciones sobre desarrollo, soporte e infraestructura. No dudes en escribirme.',
+      'footer.rights': 'Todos los derechos reservados.',
+      'toast.copied': 'Correo copiado al portapapeles',
+      'toast.failed': 'No se pudo copiar. El correo es',
+      'theme.aria': 'Personalizar apariencia',
+      'theme.open': 'Personalizar los colores del sitio',
+      'theme.color': 'Color de acento',
+      'theme.mode': 'Modo',
+      'theme.dark': 'Oscuro',
+      'theme.light': 'Claro',
+      'color.violet': 'Violeta',
+      'color.mint': 'Menta',
+      'color.coral': 'Coral',
+      'color.sky': 'Azul',
+      'color.amber': 'Ámbar',
+      'color.lime': 'Lima',
+      'noscript': 'Este portafolio usa JavaScript para cargar el contenido y las animaciones. Activa JavaScript para ver la página completa.'
+    },
+
+    de: {
+      'doc.title': 'Pedro Scomparim Pelizaro — Portfolio',
+      'doc.description': 'Portfolio von Pedro Scomparim Pelizaro — IT-Support-Analyst und Student der Wirtschaftsinformatik in Campinas, Brasilien. Erfahrung, Ausbildung und Kontakt.',
+      'skip': 'Zum Inhalt springen',
+      'nav.aria': 'Hauptnavigation',
+      'nav.about': 'Über mich',
+      'nav.history': 'Erfahrung',
+      'nav.education': 'Ausbildung',
+      'nav.projects': 'Projekte',
+      'nav.skills': 'Kenntnisse',
+      'nav.contact': 'Kontakt',
+      'nav.toggle': 'Navigationsmenü öffnen',
+      'lang.aria': 'Sprache wählen',
+      'lang.current': 'Aktuelle Sprache',
+      'hero.hi': 'Hallo, ich bin',
+      'hero.cta1': 'Projekte ansehen',
+      'hero.cta2': 'Kontakt aufnehmen',
+      'hero.photoAlt': 'Foto von Pedro Scomparim Pelizaro',
+      'tag.history': '01 — Werdegang',
+      'tag.education': '02 — Ausbildung',
+      'tag.projects': '03 — Portfolio',
+      'tag.skills': '04 — Kenntnisse',
+      'tag.contact': '05 — Kontakt',
+      'history.title': 'Beruflicher Werdegang',
+      'history.lead': 'Wo ich gearbeitet habe, was ich aufgebaut und in jeder Station gelernt habe.',
+      'education.title': 'Ausbildung & Zertifizierungen',
+      'education.lead': 'Meine akademische Grundlage und die Kurse, die meine technische Ausbildung ergänzen.',
+      'education.certs': 'Zertifizierungen',
+      'projects.title': 'Projekte',
+      'projects.lead': 'Drei vollständige Projekte, vom Briefing bis zur veröffentlichten Website. Zu jedem gibt es die Fallstudie im Repository: das Problem, die Design-Entscheidungen und was ich anders machen würde.',
+      'projects.view': 'Projekt ansehen',
+      'projects.github': 'Auf GitHub ansehen',
+      'projects.code': 'Quellcode',
+      'skills.title': 'Kenntnisse & Werkzeuge',
+      'skills.lead': 'Technologien, Werkzeuge und Fähigkeiten, die ich täglich einsetze.',
+      'contact.title': 'Bauen wir gemeinsam etwas auf?',
+      'contact.lead': 'Ich bin offen für neue Chancen in der IT und für gute Gespräche über Entwicklung, Support und Infrastruktur. Melden Sie sich gern.',
+      'footer.rights': 'Alle Rechte vorbehalten.',
+      'toast.copied': 'E-Mail-Adresse in die Zwischenablage kopiert',
+      'toast.failed': 'Kopieren nicht möglich. Die E-Mail-Adresse lautet',
+      'theme.aria': 'Darstellung anpassen',
+      'theme.open': 'Farben der Website anpassen',
+      'theme.color': 'Akzentfarbe',
+      'theme.mode': 'Modus',
+      'theme.dark': 'Dunkel',
+      'theme.light': 'Hell',
+      'color.violet': 'Violett',
+      'color.mint': 'Minze',
+      'color.coral': 'Koralle',
+      'color.sky': 'Blau',
+      'color.amber': 'Bernstein',
+      'color.lime': 'Limette',
+      'noscript': 'Dieses Portfolio lädt Inhalte und Animationen per JavaScript. Aktivieren Sie JavaScript, um die vollständige Seite zu sehen.'
+    },
+
+    fr: {
+      'doc.title': 'Pedro Scomparim Pelizaro — Portfolio',
+      'doc.description': 'Portfolio de Pedro Scomparim Pelizaro — analyste support technique et étudiant en systèmes d’information à Campinas, Brésil. Expérience, formation et contact.',
+      'skip': 'Aller au contenu',
+      'nav.aria': 'Navigation principale',
+      'nav.about': 'À propos',
+      'nav.history': 'Expérience',
+      'nav.education': 'Formation',
+      'nav.projects': 'Projets',
+      'nav.skills': 'Compétences',
+      'nav.contact': 'Contact',
+      'nav.toggle': 'Ouvrir le menu de navigation',
+      'lang.aria': 'Choisir la langue',
+      'lang.current': 'Langue actuelle',
+      'hero.hi': 'Bonjour, je suis',
+      'hero.cta1': 'Voir les projets',
+      'hero.cta2': 'Me contacter',
+      'hero.photoAlt': 'Photo de Pedro Scomparim Pelizaro',
+      'tag.history': '01 — Parcours',
+      'tag.education': '02 — Formation',
+      'tag.projects': '03 — Portfolio',
+      'tag.skills': '04 — Compétences',
+      'tag.contact': '05 — Contact',
+      'history.title': 'Parcours professionnel',
+      'history.lead': 'Où je suis passé, ce que j’ai construit et ce que j’ai appris à chaque étape.',
+      'education.title': 'Formation et certifications',
+      'education.lead': 'Ma base académique et les cours qui complètent ma formation technique.',
+      'education.certs': 'Certifications',
+      'projects.title': 'Projets',
+      'projects.lead': 'Trois projets complets, du brief au site en ligne. Chacun a son étude de cas dans le dépôt : le problème, les choix de conception et ce que je ferais autrement.',
+      'projects.view': 'Voir le projet',
+      'projects.github': 'Voir sur GitHub',
+      'projects.code': 'Code source',
+      'skills.title': 'Compétences et outils',
+      'skills.lead': 'Technologies, outils et compétences que j’utilise au quotidien.',
+      'contact.title': 'On construit quelque chose ensemble ?',
+      'contact.lead': 'Je suis ouvert à de nouvelles opportunités dans la tech et aux bonnes discussions sur le développement, le support et l’infrastructure. N’hésitez pas à m’écrire.',
+      'footer.rights': 'Tous droits réservés.',
+      'toast.copied': 'Adresse e-mail copiée dans le presse-papiers',
+      'toast.failed': 'Copie impossible. L’adresse e-mail est',
+      'theme.aria': 'Personnaliser l’apparence',
+      'theme.open': 'Personnaliser les couleurs du site',
+      'theme.color': 'Couleur d’accent',
+      'theme.mode': 'Mode',
+      'theme.dark': 'Sombre',
+      'theme.light': 'Clair',
+      'color.violet': 'Violet',
+      'color.mint': 'Menthe',
+      'color.coral': 'Corail',
+      'color.sky': 'Bleu',
+      'color.amber': 'Ambre',
+      'color.lime': 'Citron vert',
+      'noscript': 'Ce portfolio utilise JavaScript pour charger son contenu et ses animations. Activez JavaScript pour voir la page complète.'
+    }
+  };
+
+  function existe(id) {
+    for (var i = 0; i < LANGS.length; i++) { if (LANGS[i].id === id) return true; }
+    return false;
+  }
+
+  var atual = PADRAO;
+  try {
+    var salvo = localStorage.getItem(STORAGE);
+    if (salvo && existe(salvo)) atual = salvo;
+  } catch (e) { /* armazenamento bloqueado: segue no padrão */ }
+
+  return {
+    LANGS: LANGS,
+    STORAGE: STORAGE,
+    PADRAO: PADRAO,
+    atual: atual,
+    existe: existe,
+
+    /* Texto de interface pela chave, com queda para português. */
+    t: function (chave) {
+      var dic = UI[this.atual] || UI[PADRAO];
+      if (dic && dic[chave] !== undefined) return dic[chave];
+      return UI[PADRAO][chave] !== undefined ? UI[PADRAO][chave] : chave;
+    },
+
+    /* Campo de conteúdo: string passa direto, objeto devolve o idioma atual. */
+    campo: function (valor) {
+      if (valor === null || valor === undefined) return '';
+      if (typeof valor === 'string') return valor;
+      if (valor[this.atual] !== undefined) return valor[this.atual];
+      return valor[PADRAO] !== undefined ? valor[PADRAO] : '';
+    },
+
+    definir: function (id) {
+      if (!existe(id)) return;
+      this.atual = id;
+      try { localStorage.setItem(STORAGE, id); } catch (e) { }
+    }
+  };
+})();
