@@ -322,7 +322,7 @@ window.I18N = (function () {
     /* Campo de conteúdo: string passa direto, objeto devolve o idioma atual. */
     campo: function (valor) {
       if (valor === null || valor === undefined) return '';
-      if (typeof valor === 'string') return valor;
+      if (typeof valor === 'string' || Array.isArray(valor)) return valor;
       if (valor[this.atual] !== undefined) return valor[this.atual];
       return valor[PADRAO] !== undefined ? valor[PADRAO] : '';
     },
