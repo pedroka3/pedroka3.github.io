@@ -19,11 +19,11 @@ window.PORTFOLIO_DATA = {
     /* O primeiro item é o que aparece antes da animação começar a digitar —
        ou seja, a primeira coisa que o recrutador lê. */
     roles: {
-      pt: ['Web Design & Front-end', 'Analista de Suporte Técnico', 'Estudante de Sistemas de Informação', 'Apaixonado por tecnologia e redes'],
-      en: ['Web Design & Front-end', 'Technical Support Analyst', 'Information Systems student', 'Passionate about technology and networks'],
-      es: ['Web Design & Front-end', 'Analista de Soporte Técnico', 'Estudiante de Sistemas de Información', 'Apasionado por la tecnología y las redes'],
-      de: ['Web Design & Front-end', 'IT-Support-Analyst', 'Student der Wirtschaftsinformatik', 'Begeistert von Technik und Netzwerken'],
-      fr: ['Web Design & Front-end', 'Analyste support technique', 'Étudiant en systèmes d’information', 'Passionné de technologie et de réseaux']
+      pt: ['Analista de Suporte Técnico', 'Suporte & Redes', 'Estudante de Sistemas de Informação', 'Apaixonado por tecnologia e redes'],
+      en: ['Technical Support Analyst', 'Support & Networking', 'Information Systems student', 'Passionate about technology and networks'],
+      es: ['Analista de Soporte Técnico', 'Soporte y Redes', 'Estudiante de Sistemas de Información', 'Apasionado por la tecnología y las redes'],
+      de: ['IT-Support-Analyst', 'Support & Netzwerke', 'Student der Wirtschaftsinformatik', 'Begeistert von Technik und Netzwerken'],
+      fr: ['Analyste support technique', 'Support et réseaux', 'Étudiant en systèmes d’information', 'Passionné de technologie et de réseaux']
     },
 
     bio: {
@@ -297,13 +297,23 @@ window.PORTFOLIO_DATA = {
 
   skills: [
     {
-      title: { pt: 'Design & Web', en: 'Design & Web', es: 'Diseño y Web', de: 'Design & Web', fr: 'Design et Web' },
+      title: { pt: 'Redes', en: 'Networking', es: 'Redes', de: 'Netzwerke', fr: 'Réseaux' },
       items: {
-        pt: ['Figma', 'UI/UX', 'Identidade visual', 'Design System', 'Acessibilidade (WCAG)', 'SEO técnico', 'CRO', 'Design responsivo', 'WordPress / Elementor', 'Webflow'],
-        en: ['Figma', 'UI/UX', 'Brand identity', 'Design System', 'Accessibility (WCAG)', 'Technical SEO', 'CRO', 'Responsive design', 'WordPress / Elementor', 'Webflow'],
-        es: ['Figma', 'UI/UX', 'Identidad visual', 'Design System', 'Accesibilidad (WCAG)', 'SEO técnico', 'CRO', 'Diseño responsivo', 'WordPress / Elementor', 'Webflow'],
-        de: ['Figma', 'UI/UX', 'Markenidentität', 'Design System', 'Barrierefreiheit (WCAG)', 'Technisches SEO', 'CRO', 'Responsives Design', 'WordPress / Elementor', 'Webflow'],
-        fr: ['Figma', 'UI/UX', 'Identité visuelle', 'Design System', 'Accessibilité (WCAG)', 'SEO technique', 'CRO', 'Design responsive', 'WordPress / Elementor', 'Webflow']
+        pt: ['TCP/IP', 'Endereçamento IP e sub-redes', 'DHCP', 'DNS', 'Roteadores', 'Switches', 'Access Points', 'Redes Wi-Fi', 'VLAN', 'Cabeamento estruturado', 'Diagnóstico de rede (ping, traceroute, ipconfig, nslookup)'],
+        en: ['TCP/IP', 'IP addressing and subnetting', 'DHCP', 'DNS', 'Routers', 'Switches', 'Access Points', 'Wi-Fi networks', 'VLAN', 'Structured cabling', 'Network diagnostics (ping, traceroute, ipconfig, nslookup)'],
+        es: ['TCP/IP', 'Direccionamiento IP y subredes', 'DHCP', 'DNS', 'Routers', 'Switches', 'Access Points', 'Redes Wi-Fi', 'VLAN', 'Cableado estructurado', 'Diagnóstico de red (ping, traceroute, ipconfig, nslookup)'],
+        de: ['TCP/IP', 'IP-Adressierung und Subnetting', 'DHCP', 'DNS', 'Router', 'Switches', 'Access Points', 'WLAN-Netzwerke', 'VLAN', 'Strukturierte Verkabelung', 'Netzwerkdiagnose (ping, traceroute, ipconfig, nslookup)'],
+        fr: ['TCP/IP', 'Adressage IP et sous-réseaux', 'DHCP', 'DNS', 'Routeurs', 'Switches', 'Access Points', 'Réseaux Wi-Fi', 'VLAN', 'Câblage structuré', 'Diagnostic réseau (ping, traceroute, ipconfig, nslookup)']
+      }
+    },
+    {
+      title: { pt: 'Suporte técnico', en: 'Technical support', es: 'Soporte técnico', de: 'IT-Support', fr: 'Support technique' },
+      items: {
+        pt: ['Atendimento de chamados (Help Desk)', 'Suporte e acesso remoto', 'Troubleshooting', 'Análise e resolução de incidentes', 'Suporte a técnicos de campo', 'Instalação e configuração de Windows', 'Configuração de hardware', 'Configuração de software', 'Documentação de atendimentos'],
+        en: ['Ticket handling (Help Desk)', 'Remote support and access', 'Troubleshooting', 'Incident analysis and resolution', 'Field technician support', 'Windows installation and setup', 'Hardware setup', 'Software setup', 'Service documentation'],
+        es: ['Atención de incidencias (Help Desk)', 'Soporte y acceso remoto', 'Troubleshooting', 'Análisis y resolución de incidentes', 'Soporte a técnicos de campo', 'Instalación y configuración de Windows', 'Configuración de hardware', 'Configuración de software', 'Documentación de atenciones'],
+        de: ['Ticketbearbeitung (Help Desk)', 'Fernsupport und Fernzugriff', 'Troubleshooting', 'Analyse und Behebung von Störungen', 'Unterstützung von Außendiensttechnikern', 'Windows-Installation und -Konfiguration', 'Hardware-Konfiguration', 'Software-Konfiguration', 'Dokumentation von Einsätzen'],
+        fr: ['Gestion des tickets (Help Desk)', 'Support et accès à distance', 'Troubleshooting', 'Analyse et résolution d’incidents', 'Assistance aux techniciens de terrain', 'Installation et configuration de Windows', 'Configuration matérielle', 'Configuration logicielle', 'Documentation des interventions']
       }
     },
     {
@@ -325,19 +335,6 @@ window.PORTFOLIO_DATA = {
         de: 'Programmiersprachen — Grundlagen', fr: 'Langages — notions'
       },
       items: ['C', 'C#', 'C++', 'PHP']
-    },
-    {
-      title: {
-        pt: 'Suporte & Infraestrutura', en: 'Support & Infrastructure', es: 'Soporte e Infraestructura',
-        de: 'Support & Infrastruktur', fr: 'Support et infrastructure'
-      },
-      items: {
-        pt: ['Suporte e acesso remoto', 'Troubleshooting', 'Roteadores', 'Access Points', 'Redes', 'Configuração de hardware', 'Configuração de software'],
-        en: ['Remote support and access', 'Troubleshooting', 'Routers', 'Access Points', 'Networks', 'Hardware setup', 'Software setup'],
-        es: ['Soporte y acceso remoto', 'Troubleshooting', 'Routers', 'Access Points', 'Redes', 'Configuración de hardware', 'Configuración de software'],
-        de: ['Fernsupport und Fernzugriff', 'Troubleshooting', 'Router', 'Access Points', 'Netzwerke', 'Hardware-Konfiguration', 'Software-Konfiguration'],
-        fr: ['Support et accès à distance', 'Troubleshooting', 'Routeurs', 'Access Points', 'Réseaux', 'Configuration matérielle', 'Configuration logicielle']
-      }
     },
     {
       title: {
